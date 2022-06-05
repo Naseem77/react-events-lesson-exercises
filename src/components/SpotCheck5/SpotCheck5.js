@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-
+import Task from './Task'
 class SpotCheck5 extends Component {
-
-  // Each task should be desplayed with a Task component.
-  // Each Task should display the task's text, and a Complete button with the class "complete"
-  // However, SpotCheck5 should filter out the tasks whose complete is true
-  // Clicking the Complete button should change that task's complete to true in App's state
 
   constructor() {
     super()
@@ -19,13 +14,15 @@ class SpotCheck5 extends Component {
   }
 
   markComplete = text => {
-
+    let currentTasks = [...this.state.tasks]
+    currentTasks.find(t => t.text === text).complete = true
+    this.setState({ tasks: currentTasks }) //remember that when your key and value have the same name, you can use this shortcut
   }
 
   render() {
-    return (
-      <div></div>
-    )
+    return this.state.tasks
+      .filter(t => !t.complete)
+      .map(t => <Task task={t} markComplete={this.markComplete} />)
   }
 }
 
